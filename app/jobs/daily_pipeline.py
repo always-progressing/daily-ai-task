@@ -1,0 +1,1 @@
+# Daily automated pipeline will be implemented here

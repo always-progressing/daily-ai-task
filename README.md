@@ -12,3 +12,7 @@ A system that converts daily AI news into executable learning tasks.
 
 ## Tech Stack
 FastAPI / SQLite / LLM API
+
+## Local run (health check)
+`uvicorn app.main:app --reload`
+visit http://127.0.0.1:8000/health
