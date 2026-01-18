@@ -11,3 +11,6 @@ class News(Base):
     url = Column(String, unique=True, index=True)
     published_at = Column(DateTime)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+    source_name = Column(String(100))
+    source_type = Column(String(50))

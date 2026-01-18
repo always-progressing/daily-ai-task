@@ -48,9 +48,32 @@ from datetime import datetime
 from app.core.database import SessionLocal
 from app.models.news import News
 
+# FEEDS = [
+#     "https://openai.com/blog/rss.xml",
+#     "https://arxiv.org/rss/cs.AI",
+# ]
+
 FEEDS = [
-    "https://openai.com/blog/rss.xml",
-    "https://arxiv.org/rss/cs.AI",
+    {
+        "name": "OpenAI",
+        "url": "https://openai.com/blog/rss.xml",
+        "type": "official",
+    },
+    {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/rss.xml",
+        "type": "official",
+    },
+    {
+        "name": "arXiv cs.AI",
+        "url": "https://arxiv.org/rss/cs.AI",
+        "type": "paper",
+    },
+    {
+        "name": "Hugging Face",
+        "url": "https://huggingface.co/blog/feed.xml",
+        "type": "community",
+    },
 ]
 
 
@@ -58,14 +81,14 @@ def ingest_news() -> int:
     db = SessionLocal()
     inserted = 0
 
-    for feed_url in FEEDS:
-        print(f"Fetching feed: {feed_url}")
-        feed = feedparser.parse(feed_url)
+    for feed_cfg in FEEDS:
+        print(f"Fetching feed: {feed_cfg['url']}")
+        parsed_feed = feedparser.parse(feed_cfg["url"])
 
-        print(f"Feed title: {feed.feed.get('title')}")
-        print(f"Entries found: {len(feed.entries)}")
+        print(f"Feed title: {parsed_feed.feed.get('title')}")
+        print(f"Entries found: {len(parsed_feed.entries)}")
 
-        for entry in feed.entries:
+        for entry in parsed_feed.entries:
             title = entry.get("title")
             url = entry.get("link")
 
@@ -87,6 +110,8 @@ def ingest_news() -> int:
                 summary=entry.get("summary", "")[:2000],
                 url=url,
                 published_at=published,
+                source_name=feed_cfg["name"],
+                source_type=feed_cfg["type"],
             )
 
             db.add(news)

@@ -3,19 +3,27 @@ from urllib.parse import urlparse
 from app.models.news import News
 from typing import List
 
-SOURCE_WEIGHT = {
-    "openai.com": 5,
-    "deepmind.com": 5,
-    "anthropic.com": 5,
-    "google.com": 4,
-    "microsoft.com": 3,
-    # "arxiv.org": 3,
-    "github.com": 3,
-    "medium.com": 2,
-    "towardsdatascience.com": 2,
-    "reddit.com": 2,
+# SOURCE_WEIGHT = {
+#     "openai.com": 5,
+#     "deepmind.com": 5,
+#     "anthropic.com": 5,
+#     "google.com": 4,
+#     "microsoft.com": 3,
+#     # "arxiv.org": 3,
+#     "github.com": 3,
+#     "medium.com": 2,
+#     "towardsdatascience.com": 2,
+#     "reddit.com": 2,
 
+# }
+
+SOURCE_TYPE_WEIGHT = {
+    "official": 5,
+    "paper": 4,
+    "community": 2,
+    "blog": 2,
 }
+
 
 KEYWORDS = {
     # "artificial intelligence": 3,
@@ -44,8 +52,8 @@ def score_news(news: News) -> int:
     score = 0
 
     # source score
-    domain = urlparse(news.url).netloc.replace("www.","")
-    score += SOURCE_WEIGHT.get(domain, 1)
+    # domain = urlparse(news.url).netloc.replace("www.","")
+    score += SOURCE_TYPE_WEIGHT.get(news.source_type, 1)
 
     # keyword score
     text = f"{news.title} {news.summary}".lower()
