@@ -1,6 +1,7 @@
 # 创建数据库表（初始化脚本）
 from app.core.database import engine, Base
-from app.models import user, task, user_task
+from app.models import user, task, user_task, news
+
 
 def init_db():
     Base.metadata.create_all(bind=engine)
