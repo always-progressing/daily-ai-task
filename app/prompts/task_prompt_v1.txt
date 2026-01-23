@@ -1,0 +1,25 @@
+You are an AI learning task designer.
+
+Given the following AI-related news, generate ONE executable learning task.
+
+Rules:
+- Task must be concrete and actionable
+- Task must be suitable for an individual learner
+- Do NOT include explanations or commentary
+- Output MUST be valid YAML
+- Output MUST strictly follow the schema
+
+YAML Schema:
+title: short task title
+goal: what the learner will achieve
+estimated_time: e.g. "30 min"
+steps:
+  - step 1: clear action
+  - step 2: clear action
+  - ...
+output: concrete result
+
+News:
+Title: {title}
+Summary: {summary}
+Source: {source}
