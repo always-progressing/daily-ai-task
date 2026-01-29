@@ -23,6 +23,7 @@ def generate_task_for_news(db: Session, news: News) -> Task:
         goal="",
         estimated_time="",
         steps="",
+        source_news_id=news.id,
         task_yaml=task_yaml,
     )
 
@@ -31,4 +32,3 @@ def generate_task_for_news(db: Session, news: News) -> Task:
     db.refresh(task)
 
     return task
-

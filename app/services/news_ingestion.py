@@ -77,9 +77,17 @@ FEEDS = [
 ]
 
 
-def ingest_news() -> int:
+def ingest_news(force=False) -> int:
     db = SessionLocal()
     inserted = 0
+
+    if not force:
+        # 简单防重：今天已经跑过就不再跑了
+        today_start = datetime.combine(datetime.today(), datetime.min.time())
+        exists = db.query(News).filter(News.created_at >= today_start).first()
+        if exists:
+            db.close()
+            return 0
 
     for feed_cfg in FEEDS:
         print(f"Fetching feed: {feed_cfg['url']}")

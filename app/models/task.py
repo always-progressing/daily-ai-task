@@ -12,7 +12,7 @@ class Task(Base):
 
     # title = Column(String)
     # description = Column(Text, nullable=True)
-    # source_news_id = Column(String, index=True)
+    source_news_id = Column(String, ForeignKey("news.id"))  # 便于对照生成task效果和相关度
     # date = Column(Date, index=True)
     # created_at = Column(DateTime, default=datetime.utcnow)
 

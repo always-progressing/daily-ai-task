@@ -42,7 +42,7 @@ def run_daily_pipeline(
         # 1. news ingestion
         try:
             # result["news_ingested"] = ingest_news(force=force)
-            result["news_ingested"] = ingest_news()
+            result["news_ingested"] = ingest_news(force=force)
         except Exception as e:
             logger.exception("News ingestion failed")
             result["errors"].append(f"ingest_news: {e}")

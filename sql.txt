@@ -1,0 +1,27 @@
+将 daily_task_lists, daily_task_items, 和 tasks 三个表连接起来，以获取与给定 daily_list_id 相关的所有 task_yaml 内容。
+SELECT
+  T3.task_yaml
+FROM
+  daily_task_lists AS T1
+JOIN
+  daily_task_items AS T2 ON T1.id = T2.daily_list_id
+JOIN
+  tasks AS T3 ON T2.task_id = T3.id
+WHERE
+  T1.id = 1;
+(以list的id=1为例)
+
+连接了所有四个表，从 daily_task_lists 一直关联到 news，以获取最终的 url
+SELECT
+  T4.url
+FROM
+  daily_task_lists AS T1
+JOIN
+  daily_task_items AS T2 ON T1.id = T2.daily_list_id
+JOIN
+  tasks AS T3 ON T2.task_id = T3.id
+JOIN
+  news AS T4 ON T3.news_id = T4.id
+WHERE
+  T1.id = 1;
+(以list的id=1为例)
