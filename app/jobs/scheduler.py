@@ -15,21 +15,21 @@ def scheduled_job():
                 result["daily_list_created"])
     
 def main():
-    # 测试用
-    scheduler_test = BlockingScheduler(timezone="UTC")
-    scheduler_test.add_job(run_daily_pipeline, trigger="date")
-    scheduler_test.start()
+    # # 测试用
+    # scheduler_test = BlockingScheduler(timezone="UTC")
+    # scheduler_test.add_job(run_daily_pipeline, trigger="date")
+    # scheduler_test.start()
 
-    # # 正式用
-    # scheduler = BlockingScheduler(timezone="UTC")
-    # # Schedule the job to run daily at 8:00 UTC
-    # scheduler.add_job(
-    #     scheduled_job,
-    #     trigger="cron",
-    #     hour=8,
-    #     minute=0,
-    # )
-    # logger.info("Scheduler started. Daily pipeline job will run at 8:00 UTC daily.")
+    # 正式用
+    scheduler = BlockingScheduler(timezone="UTC")
+    # Schedule the job to run daily at 8:00 UTC
+    scheduler.add_job(
+        scheduled_job,
+        trigger="cron",
+        hour=8,
+        minute=0,
+    )
+    logger.info("Scheduler started. Daily pipeline job will run at 8:00 UTC daily.")
     # scheduler.start()
 
 if __name__ == "__main__":

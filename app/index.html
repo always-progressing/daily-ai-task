@@ -1,0 +1,22 @@
+<ul id="tasks"></ul>
+
+<script>
+fetch("/api/daily/2026-01-30?user_id=1")
+  .then(res => res.json())
+  .then(tasks => {
+    const ul = document.getElementById("tasks")
+    tasks.forEach(t => {
+      const li = document.createElement("li")
+      li.innerHTML = `
+        <input type="checkbox" ${t.completed ? "checked" : ""}
+          onchange="complete(${t.task_id})" />
+        ${t.title}
+      `
+      ul.appendChild(li)
+    })
+  })
+
+function complete(taskId) {
+  fetch(`/api/tasks/${taskId}/complete?user_id=1`, { method: "POST" })
+}
+</script>
